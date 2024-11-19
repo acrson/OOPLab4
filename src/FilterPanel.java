@@ -1,4 +1,4 @@
-package src;// I started implementing FilterPanel but got stuck and had to move on, didn't have the time to come back and
+// I started implementing FilterPanel but got stuck and had to move on, didn't have the time to come back and
 // finish it unfortunately...
 
 import javax.swing.*;
@@ -25,7 +25,7 @@ public class FilterPanel extends JPanel {
         add(religionComboBox);
         add(applyFilterButton);
 
-        // Apply filter on button click
+        // Applies filter on button click
         applyFilterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,13 +37,11 @@ public class FilterPanel extends JPanel {
     private void applyFilter() {
         String selectedReligion = (String) religionComboBox.getSelectedItem();
 
-        // Create a RowFilter based on the selected religion
         if (!selectedReligion.equals("All")) {
-            // Assuming religion data is in specific column (adjust column index as needed)
             RowFilter<Object, Object> religionFilter = RowFilter.regexFilter(selectedReligion, 1); // Use the correct column index
             tablePanel.setFilter(religionFilter);
         } else {
-            tablePanel.setFilter(null); // Remove filter if "All" is selected
+            tablePanel.setFilter(null); // Removes the filter
         }
     }
 }

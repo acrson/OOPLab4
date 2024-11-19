@@ -1,8 +1,7 @@
-package src;
-
 import javax.swing.*;
 import java.awt.*;
 
+// Serves as the main for GUI
 public class DataVisual {
     public static TablePanel tablePanel;
     public static DetailsPanel detailsPanel;

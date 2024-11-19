@@ -1,5 +1,3 @@
-package src;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -65,26 +63,19 @@ public class StatsPanel extends JPanel {
             }
 
             JLabel valueLabel;
-
             if (s.equals("Column Selected: ")) {
                 valueLabel = new JLabel(data.getColumnNames(data)[selectedColumn]);
-            }
-            else if (s.equals("Maximum: ")) {
+            } else if (s.equals("Maximum: ")) {
                 valueLabel = new JLabel(maxString);
-            }
-            else if (s.equals("Minimum: ")) {
+            } else if (s.equals("Minimum: ")) {
                 valueLabel = new JLabel(minString);
-            }
-            else if (s.equals("Mean: ")) {
+            } else if (s.equals("Mean: ")) {
                 valueLabel = new JLabel(meanString);
-            }
-            else if (s.equals("Median: ")) {
+            } else if (s.equals("Median: ")) {
                 valueLabel = new JLabel(medianString);
-            }
-            else if (s.equals("Mode: ")) {
+            } else if (s.equals("Mode: ")) {
                 valueLabel = new JLabel(modeString);
-            }
-            else {
+            } else {
                 valueLabel = new JLabel(rangeString);
             }
 
@@ -108,78 +99,61 @@ public class StatsPanel extends JPanel {
         repaint();
     }
 
-    // Function to find the maximum value from the data in the selected column
-    public double getMax(ArrayList<Double> columnData) {
-        double max;
-        max = Collections.max(columnData);
+    public double getMax(ArrayList<Double> dataList) {
+        double max = dataList.get(0);
+        for (int i = 1; i < dataList.size(); i++) {
+            if (dataList.get(i) > max) {
+                max = dataList.get(i);
+            }
+        }
         return max;
     }
 
-    // Function to find the minimum value from the data in the selected column
-    public double getMin(ArrayList<Double> columnData) {
-        double min;
-        min = Collections.min(columnData);
+    public double getMin(ArrayList<Double> dataList) {
+        double min = dataList.get(0);
+        for (int i = 1; i < dataList.size(); i++) {
+            if (dataList.get(i) < min) {
+                min = dataList.get(i);
+            }
+        }
         return min;
     }
 
-    // Function to find the average of the values from the data in the selected column
-    public double getMean(ArrayList<Double> columnData) {
-        double mean = 0;
-        for (Double value : columnData) {
-            mean += value;
+    public double getMean(ArrayList<Double> dataList) {
+        double sum = 0;
+        for (Double value : dataList) {
+            sum += value;
         }
-        mean = mean / columnData.size();
-        return mean;
+        return sum / dataList.size();
     }
 
-    // Function to find the median value from the data in the selected column
-    public double getMedian(ArrayList<Double> columnData) {
-        double median = 0;
-        boolean even = true;
-        columnData.sort(Collections.reverseOrder());
-
-        if (columnData.size() % 2 == 1) {
-            even  = false;
+    public double getMedian(ArrayList<Double> dataList) {
+        Collections.sort(dataList);
+        int size = dataList.size();
+        if (size % 2 == 0) {
+            return (dataList.get(size / 2 - 1) + dataList.get(size / 2)) / 2;
+        } else {
+            return dataList.get(size / 2);
         }
-
-        int middle = columnData.size() / 2;
-        if (even) {
-            median = (columnData.get(middle) + columnData.get(middle + 1)) / 2;
-        }
-        else {
-            median = columnData.get(middle);
-        }
-
-        return median;
     }
 
-    // Function to find the mode of the values from the data in the selected column
-    public double getMode(ArrayList<Double> columnData) {
+    public double getMode(ArrayList<Double> dataList) {
         Map<Double, Integer> frequencyMap = new HashMap<>();
-
-        // Count occurrences of each number
-        for (Double value : columnData) {
-            frequencyMap.put(value, frequencyMap.getOrDefault(value, 0) + 1);
+        for (Double num : dataList) {
+            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
         }
-
-        // Find the number with the highest frequency
-        double mode = columnData.get(0);
-        int maxCount = 0;
-
+        double mode = dataList.get(0);
+        int maxCount = 1;
         for (Map.Entry<Double, Integer> entry : frequencyMap.entrySet()) {
             if (entry.getValue() > maxCount) {
                 maxCount = entry.getValue();
                 mode = entry.getKey();
             }
         }
-
         return mode;
     }
 
-    // Function to find the range of the values from the data in the selected column
-    public double getRange(ArrayList<Double> columnData) {
-        double max = getMax(columnData);
-        double min = getMin(columnData);
-        return max - min;
+    public double getRange(ArrayList<Double> dataList) {
+        return getMax(dataList) - getMin(dataList);
     }
 }

@@ -1,5 +1,3 @@
-package src;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,13 +7,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Data {
-    // Create a List sheet to hold the data in
+    // Create a List called sheet to hold the data in
     public static List<List<String>> sheet = new ArrayList<>();
     public static Object[][] data;
 
     public void extractData(){
         // CSV file path for data (relative path)
-        String csvFilePath = "src/src/Data/Global Religion Dataset.csv";
+        String csvFilePath = "src/Data/Global Religion Dataset.csv";
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
             sheet = br.lines()  // Converts lines to stream
@@ -59,7 +57,6 @@ public class Data {
                 "Total Population", "Version"
         };
 
-        //return sheet.getFirst().toArray(new String[0]);
         return columnNames;
     }
 
